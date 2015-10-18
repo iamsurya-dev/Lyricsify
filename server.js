@@ -180,8 +180,12 @@ app.get("/:artist/:title/:lang", function(req, res) {
             if (origLyrics === null) { connection.release(); res.end(); return; }
             if (transLyrics === null) {
                 console.log("!!!!!", origLyrics, transLyrics, origLang, transLang, songId);
-                client.translate({text: origLyrics, from:origLang, to:transLang},
-                function (err, data) {
+                client.translateArray({texts: origLyrics.split('\n'), from:origLang, to:transLang},
+                function (err, dataArray) {
+                    var data = "";
+                    for (var i = 0; i < dataArray.length; i++) {
+                        data += dataArray[i].TranslatedText + '\n';
+                    }
                     connection.query("insert into lyrics set ?",
                         {songId:songId, transLang:transLang, text:data}, 
                         function (err, result) {
