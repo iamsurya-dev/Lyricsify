@@ -1,17 +1,64 @@
-<!DOCTYPE>
-<html>
-<head>
-	<title>Lyricsify</title>
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<meta name="description" content="Translate Lyrics" />
+		<meta name="keywords" content="translation, lyrics" />
+		<!--<meta name="robots" content="nofollow" />-->
+		<!-- for our lovely web icon -->
+		<link rel="icon" href="../../favicon.ico">
 
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-</head>
-<body>
-	<h3>Body goes here</h3>
-	<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<title>Lyricsify</title>
 
-</body>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+		<link rel="stylesheet" href="css/lyricsify.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="logo">
+				<h1>Lyricsify</h1>
+			</div><!-- end of header -->
+
+
+			<div id="searchContent">
+				<div id="searchContainer">		
+					<form id="searchForm" action="" method="get">
+						<input type="search" id="searchBox" placeholder="Search a song"  />
+					</form>
+
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+
+				</div>
+			</div><!-- end of content -->
+
+		
+
+			<div class="row">
+
+				<div class="col-md-6">
+					<h4>Content 1</h4>
+				</div>
+
+				<div class="col-md-6">
+					<h4>Content 2</h4>
+				</div>
+
+			</div><!--lyrics content -->
+
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<!-- fallback to local jquery
+		<script>
+			if (typeof jQuery === 'undefined') {
+			document.write(unescape('%3Cscript%20src%3D%22/path/to/your/scripts/jquery-2.1.4.min.js%22%3E%3C/script%3E'));
+		</script> -->
+		<script src="js/index.js"></script>	
+	</body>
 </html>
