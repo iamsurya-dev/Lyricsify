@@ -13,7 +13,7 @@ var pool = mysql.createPool({
     connectionLimit : 100, //important
     host     : 'localhost',
     user     : 'root',
-    password : 'root',
+    password : process.env.MYSQLPASS,
     database : 'lyricsify',
     debug    :  false
 });
@@ -145,7 +145,7 @@ app.get("/:artist/:title/:lang", function(req, res) {
         
         var getSong = function (artist, title, callbackFound, callbackMissing) {
             connection.query(
-                "select id,origLang from songs where artist=? and title=?;",
+                "select id,origLang,artist,title from songs where artist=? and title=?;",
                 [artist, title],
                 function(err,rows) {
                     if (err || rows.length > 1) {
@@ -170,13 +170,13 @@ app.get("/:artist/:title/:lang", function(req, res) {
                         {songId: newSongId, transLang: origLang, text: origLyrics}, function (err, result) {
                         if (err) { console.log("Error!!!!!!", err); connection.release(); res.end(); return; }
                         console.log("Result is ::: ", result);
-                        finishSong(origLyrics, null, origLang, transLang, newSongId);
+                        finishSong(origLyrics, null, origLang, transLang, newSongId, artist, title);
                     });
                 });
             });
         };
         
-        var finishSong = function (origLyrics, transLyrics, origLang, transLang, songId) {
+        var finishSong = function (origLyrics, transLyrics, origLang, transLang, songId, artist, title) {
             if (origLyrics === null) { connection.release(); res.end(); return; }
             if (transLyrics === null) {
                 console.log("!!!!!", origLyrics, transLyrics, origLang, transLang, songId);
@@ -187,18 +187,19 @@ app.get("/:artist/:title/:lang", function(req, res) {
                         function (err, result) {
                         if (err) { connection.release(); res.end(); return; }
 
-                        send(origLyrics, data, origLang);
+                        send(origLyrics, data, origLang, transLang, artist, title);
                     });
                 });
             } else {
-                send(origLyrics, transLyrics, origLang);
+                send(origLyrics, transLyrics, origLang, transLang, artist, title);
             }
         };
         
-        var send = function (origLyrics, transLyrics, origLang) {
+        var send = function (origLyrics, transLyrics, origLang, transLang, artist, title) {
             connection.release();
             console.log("Return");
-            res.json({origLyrics:origLyrics, transLyrics:transLyrics, origLang:origLang});
+            res.json({origLyrics:origLyrics, transLyrics:transLyrics, origLang:origLang,
+                      transLang:transLang, artist:artist, title:title});
             return;
         };
         
@@ -222,7 +223,7 @@ app.get("/:artist/:title/:lang", function(req, res) {
                             transLyrics = rows[i].text;
                         }
                     }
-                    finishSong(origLyrics, transLyrics, song.origLang, req.params.lang, song.id);
+                    finishSong(origLyrics, transLyrics, song.origLang, req.params.lang, song.id, song.artist, song.title);
                 }
             );
         }, function() {

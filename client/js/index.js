@@ -1,3 +1,5 @@
+var $data = {};
+
 $(function() {
 
 var $lyricsList;  
@@ -17,7 +19,7 @@ var $myObject = new Object();
 $myObject.origLang = "cat";
 $myObject.transLyrics = "John";*/
 
-	$lyricsList = $myObject;
+    $lyricsList = $myObject;
 	console.log("lyricslist",$lyricsList);
 	}   
 
@@ -40,6 +42,14 @@ $myObject.transLyrics = "John";*/
 
 		var $translatedlyrics = $('#translatedlyrics');
 		$translatedlyrics.text(response.transLyrics);
+ 
+  		$('#submittransl').hide();
+  		$('#translatedlyrics').attr('readonly', true);
+		$translationContent.show();
+		
+		$data.artist = response.artist;
+		$data.title = response.title;
+		$data.lang = response.transLang;
 	}
 
 	// get languages for options
@@ -53,7 +63,7 @@ $myObject.transLyrics = "John";*/
 
 	$main.show();
 	$translationContent.hide();
-	$translate.on('click', function(e){
+	/*$translate.on('click', function(e){
 		e.preventDefault();  
 		                               
 		$.ajax({
@@ -68,14 +78,17 @@ $myObject.transLyrics = "John";*/
 		$('#translatedlyrics').html($lyricsList.transLyrics);
 		$('#originallyrics').html($lyricsList.origLyrics);
 		$translationContent.show();
-	}); 
+	}); */
 
 
 	// edit and display submit button
-	//$('#submittransl').hide();
+	$('#submittransl').hide();
+	$('#originallyrics').attr('readonly', true);
+	$('#translatedlyrics').attr('readonly', true);
 	$('#edit').on('click', function(){
 		$('#submittransl').show();
-	})
+		$('#translatedlyrics').attr('readonly', false);
+	});
 
   	$translate.on('click', function(e){
   		e.preventDefault();
@@ -92,9 +105,9 @@ $myObject.transLyrics = "John";*/
   	$('#submittransl').on('click', function(e){
   		console.log("dffsdfsdf");
   		e.preventDefault();
-  		var songTitle = $('#inputSong').val(); // fix
-  		var songArtist = $('#inputArtist').val();
-  		var songLanguage = $('#languagemenu').val();
+  		var songTitle = $data.title; // fix
+  		var songArtist = $data.artist;
+  		var songLanguage = $data.lang;
   		var translatedlyrics = $('#translatedlyrics').val();
 
   		$.post('/'+encodeURIComponent(songArtist) + '/' + encodeURIComponent(songTitle) + '/' + encodeURIComponent(songLanguage), {text: translatedlyrics}, showResponse);
