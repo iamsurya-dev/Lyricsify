@@ -41,71 +41,61 @@
 				</div>
 				<div class="row">
 					<div class="form-inline text-center" role="form">
-						<div class="form-group">
-							<input type="text" class="form-control"  placeholder="Name of song" id="inputSong">
-
-						</div>
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Name of Artist" id="inputArtist">
-						</div>
-					  	<!--
-					  	<ul class="dropdown-menu">
-					  		<li><a href="#">Action</a></li>
-			  	          	<li><a href="#">Another action</a></li>
-			  	         	<li><a href="#">Something else here</a></li>
-			  	          	<li role="separator" class="divider"></li>
-			  	          	<li><a href="#">Separated link</a></li>
-			  	          </ul> -->
-			  	          <button type="submit" class="btn btn-default" id="translate">Translate</button>
-			  	          
-			  	      </div>
-			  	      <div id="options">
-			  	      	<select name="langs">
-			  	      		<option value="language">Language1</option>
-			  	      		<option value="language">Language2</option>
-			  	      	</select>
-			  	      </div>
-			  	  </div>
-			  	</div>
-
-			  </div>
-
-			  <!-- hide -->
-			  <div id="translation">
-			  	<h3 id="songTitle">Song Title</h3>
-			  	<div class="row" id="lyricsContent">
-			  		<table>
-			  			<tr>
-			  				<td>
-			  					<h4 class="text-left">Original Language</h4>
-			  					
-			  				</td><!-- Original Lang -->
-			  				<td>
-			  					<div id="translatedtitle">
-			  						<h4 class="text-left">Translated - Language</h4>
-			  						<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
-			  					</div>
-			  				</td><!-- Translated Lang -->
-			  			</tr>
-
-			  			<tr>
-			  				<td>
-			  					<textarea class="form-control" rows="8" id="translatedlyrics"></textarea>
-			  				</td><!-- original text -->
-			  				<td>
-			  					<textarea class="form-control" rows="8" id="translatedlyrics"> </textarea>
-			  				</td><!-- translated text -->
-			  			</tr>
-			  		</table>
-			  	</div>
-			  </div>
-
-			  <div id="footer">
-			  	<p>Credits: Anonymous</p>
-			  </div>
+					  	<div class="form-group">
+					    	<input type="text" class="form-control"  placeholder="Name of Song" id="inputSong">
+					  	</div>
+					  	<div class="form-group">
+					    	<input type="text" class="form-control" placeholder="Name of Artist" id="inputArtist">
+					  	</div>
+					  	<button type="submit" class="btn btn-default" id="translate">Translate</button>
+					  	
+					</div>
+					<div id="options">
+					  	<select id="languagemenu" name="languages">
+					  	</select>
+				  	</div>
+				</div>
 			</div>
+	
+			
 
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-			<script src="js/index.js"></script>
-		</body>
-		</html>
+		</div>
+
+		<!-- hide -->
+		<div id="translation">
+			<h3 id="songTitle">Song Title</h3>
+			<div class="row" id="lyricsContent">
+				<table>
+					<tr>
+						<td>
+							<h4 class="text-left">Original Language</h4>
+							
+						</td><!-- Original Lang -->
+						<td>
+							<div id="translatedtitle">
+								<h4 class="text-left">Translated - Language</h4>
+								<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-pencil" id="edit" aria-hidden="true"></span></button>
+							</div>
+						</td><!-- Translated Lang -->
+					</tr>
+
+					<tr>
+						<td>
+							<textarea class="form-control" rows="8" id="originallyrics"></textarea>
+						</td><!-- original text -->
+						<td>
+							<textarea class="form-control" rows="8" id="translatedlyrics"> </textarea>
+						</td><!-- translated text -->
+					</tr>
+					<tr>
+						<td></td>
+						<td id="submitCell"><input type="submit" value="Submit" id="submittransl"></input></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="js/index.js"></script>
+	</body>
+</html>

@@ -116,6 +116,10 @@ td {
 	margin: auto;
 }
 
+#submitCell {
+	text-align: right;
+}
+
 
 h4.text-left {
 	display: inline;
