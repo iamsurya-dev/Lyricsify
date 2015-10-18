@@ -5,7 +5,7 @@ var MsTranslator = require('mstranslator');
 var jsdiff = require('diff');
 var lyrics = require('./musixmatch.js');
 var app = express();
-var inputText="The snow glows white on the mountain tonight. Not a footprint to be seen. A kingdom of isolation,. And it looks like I'm the queen.. The wind is howling like this swirling storm inside. Couldn't keep it in, heaven knows I tried!. Don't let them in, don't let them see. Be the good girl you always have to be. Conceal, don't feel, don't let them know. Well, now they know!. Let it go, let it go. Can't hold it back anymore. Let it go, let it go. Turn away and slam the door!. I don't care. What they're going to say. Let the storm rage on,. The cold never bothered me anyway!. It's funny how some distance. Makes everything seem small. And the fears that once controlled me. Can't get to me at all!. It's time to see what I can do. To test the limits and break through. No right, no wrong, no rules for me I'm free!. Let it go, let it go. I am one with the wind and sky. Let it go, let it go. You'll never see me cry!. Here I stand. And here I'll stay. Let the storm rage on!. My power flurries through the air into the ground. My soul is spiraling in frozen fractals all around. And one thought crystallizes like an icy blast. I'm never going back,. The past is in the past!. Let it go, let it go. When I'll rise like the break of dawn. Let it go, let it go. That perfect girl is gone!. Here I stand. In the light of day. Let the storm rage on,. The cold never bothered me anyway!";
+var inputText="!";
 var fromLang='en';
 var toLang='fr';
 
@@ -103,6 +103,7 @@ app.get("/call",function(req,res){-
 });
 
 app.post("/:artist/:title/:lang", function(req, res) {
+  console.log("request :::: ", req.body);
    pool.getConnection(function(err,connection) {
         if (err) {
         	console.log("Error is ::", err);		
@@ -114,8 +115,7 @@ app.post("/:artist/:title/:lang", function(req, res) {
         console.log('connected as id ' + connection.threadId);
         
         connection.query(
-            "update lyrics l, (select id from songs s where s.artist=? and s.title=?) s1\n"+
-            "set l.text=? where l.songid=s1.id and l.transLang=?",
+            "insert into userLyrics (songId, text, transLang) values ((select id from songs s where s.artist=? and s.title=?), ?, ?)",
             [req.params.artist, req.params.title, req.body.text, req.params.lang],
         function(err,rows){
             connection.release();
@@ -203,8 +203,6 @@ app.get("/:artist/:title/:lang", function(req, res) {
         };
         
         getSong(req.params.artist, req.params.title, function (song) {
-            console.log("song is :: ", song);
-            console.log("origLang", song.origLang, "transLang", req.params.lang);
             // Get lyrics
             connection.query(
                 "select text,transLang from lyrics l,songs s where s.artist=? and s.title=? and s.id=l.songId and (l.transLang=? or l.transLang=?)",
@@ -260,8 +258,9 @@ app.get("/mod",function(req,res){-
       }   
 
       connection.query(
-          "select S.artist, S.title, S.origLang, L.transLang, L.text as 'oldText', UL.text as 'newText'" +
-          " from songs S, lyrics L, userLyrics UL Where S.id = L.id AND L.songId = UL.songId and L.transLang = UL.transLang",
+          "select L.songId, S.artist, S.title, S.origLang, L.transLang, L.text as 'oldText', UL.text as 'newText', " +
+          "(select l1.text from lyrics l1 where l1.songID=S.id and l1.transLang=S.origLang) as origLangText " +
+          "from songs S, lyrics L, userLyrics UL Where S.id = L.songId AND L.songId = UL.songId and L.transLang = UL.transLang",
           function(err,rows){
             //Not sure how callback works
             console.log("Rows is :: ", rows);
@@ -280,7 +279,8 @@ app.get("/mod",function(req,res){-
 
 
 app.post("/mod", function(req, res) {
-    console.log("Inside mod post")
+    console.log("Inside mod post", req.body.songId);
+    console.log("lang ::: ", req.body.lng);
     pool.getConnection(function(err,connection) {
       if (err) {
         console.log("Error is ::", err);    
@@ -288,14 +288,18 @@ app.post("/mod", function(req, res) {
         res.json({"code" : 100, "status" : "Error in connection database"});
         return;
       }   
-
+      var qry = "update `lyrics` set `lyrics`.text = (select ul.text from userLyrics ul where ul.songId = " + req.body.songId + " and " +
+          "ul.transLang = " + "'" + req.body.lng + "') where `lyrics`.songid = " + req.body.songId + " and `lyrics`.transLang = " + "'"+req.body.lng + "'";
+      console.log("Query :: ", qry);
       connection.query(
-          "update `lyrics` set `lyrics`.text = `userLyrics`.text where `lyrics`.songid = ?, and `lyrics`.transLang = ?",
+          qry,
           function(err,rows){
+            console.log("Erri :: ", err);
           }
       );
       connection.query(
-          "update `lyrics` set `lyrics`.text = `userLyrics`.text INNER JOIN userLyrics ON lyrics.songId = userLyrics.songId AND lyrics.transLang = userLyrics.transLang where `lyrics`.songid = ?, and `lyrics`.transLang = ?",
+          "delete from `userLyrics` where `userLyrics`.songid = ? and `userLyrics`.transLang = ?",
+          [req.body.songId, req.body.lng],
           function(err,rows){
               res.json({"code" : 200, "status" : "Successfully authorized"});
           }
