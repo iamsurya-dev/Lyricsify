@@ -6,7 +6,7 @@ var $lyricsList;
 	function loadLyricsContent() {                   
 	/*$.getJSON('data/lyrics.json')    
 	.done( function(data){                    
-	   lyricsList = data;                            
+	   $lyricsList = data;                            
 	}).fail( function() {  
 		// fix here                    
 	  $('#translatedlyrics').html('Sorry! We could not load the translated lyrics!');
@@ -20,8 +20,21 @@ $myObject.transLyrics = "John";
 	$lyricsList = $myObject;
 	console.log("lyricslist",$lyricsList);
 	}   
-                   
 
+	function addOptions(languages){
+		console.log('language:', languages);
+		$.each(languages, function(lang, language){
+			var $select = $('#languagemenu');
+			$select.append($('<option>', {
+				value: lang,
+				text: language
+			}));
+		});
+	}
+
+	// get languages for options
+	$.getJSON('/languages', addOptions);
+                   
 	//SETUP
 	var $main, $translationContent, $translate;
 	$main = $('#main');
@@ -43,10 +56,16 @@ $myObject.transLyrics = "John";
 		loadLyricsContent();
 
 		$('#translatedlyrics').html($lyricsList.transLyrics);
-		$('#translatedlyrics').html($lyricsList.transLyrics);
+		$('#originallyrics').html($lyricsList.origLyrics);
 		$translationContent.show();
 	}); 
 
+
+	// edit and display submit button
+	$('#submittransl').hide();
+	$('#edit').on('click', function(){
+		$('#submittransl').show();
+	})
 
   	$translate.on('click', function(e){
   		e.preventDefault();
