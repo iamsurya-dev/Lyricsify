@@ -33,14 +33,14 @@ client.translate(params, function(err, data) {
   console.log("Data is :: ", data);
 });
 
-function handle_database(req,res) {
+function searchSongs(req,res) {
     
     pool.getConnection(function(err,connection) {
         if (err) {
-        	console.log("Error is ::", err);		
-          connection.release();
-          res.json({"code" : 100, "status" : "Error in connection database"});
-          return;
+			console.log("Error in connecting to the DB ::", err);		
+          	connection.release();
+          	res.json({"code" : 100, "status" : "Error in connection database"});
+          	return;
         }   
 
         console.log('connected as id ' + connection.threadId);
