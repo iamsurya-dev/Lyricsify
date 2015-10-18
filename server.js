@@ -168,6 +168,7 @@ app.get("/:artist/:title/:lang", function(req, res) {
             lyrics.getLyricsById(id, function (origLyrics, origLang) {
                 connection.query("insert into songs set ?", {artist: artist, title: title, origLang: origLang}, 
                 function(err, result) {
+                    if (err) { connection.release(); res.end(); return; }
                     connection.query("insert into lyrics set ?", 
                         {songId: result.insertId, transLang: origLang, text: origLyrics}, function (err, result) {
                         if (err) { connection.release(); res.end(); return; }
@@ -180,38 +181,41 @@ app.get("/:artist/:title/:lang", function(req, res) {
         var finishSong = function (origLyrics, transLyrics, origLang, transLang, songId) {
             if (origLyrics === null) { connection.release(); res.end(); return; }
             if (transLyrics === null) {
-                client.translate({text: origLyrics, from:song.origLang, to:req.params.lang},
+                client.translate({text: origLyrics, from:origLang, to:transLang},
                 function (err, data) {
                     connection.query("insert into lyrics set ?",
                         {songId:songId, transLang:transLang, text:data}, 
                         function (err, result) {
                         if (err) { connection.release(); res.end(); return; }
-                        send(origLyrics, transLyrics);
+                        send(origLyrics, data, origLang);
                     });
                 });
             } else {
-                send(origLyrics, transLyrics);
+                send(origLyrics, transLyrics, origLang);
             }
         };
         
-        var send = function (origLyrics, transLyrics) {
+        var send = function (origLyrics, transLyrics, origLang) {
             connection.release();
-            resp.json({origLyrics:origLyrics, transLyrics:transLyrics});
+            console.log("Return");
+            res.json({origLyrics:origLyrics, transLyrics:transLyrics, origLang:origLang});
             return;
         };
         
         getSong(req.params.artist, req.params.title, function (song) {
             console.log("song is :: ", song);
+            console.log("origLang", song.origLang, "transLang", req.params.lang);
             // Get lyrics
             connection.query(
-                "select text from lyrics l,songs s where s.artist=? and s.title=? and s.id=l.songId and (l.transLang=? or l.transLang=?)",
+                "select text,transLang from lyrics l,songs s where s.artist=? and s.title=? and s.id=l.songId and (l.transLang=? or l.transLang=?)",
                 [req.params.artist, req.params.title, song.origLang, req.params.lang],
                 function (err, rows) {
                     if (err) { connection.release(); res.end(); return; }
-                    console.log("lyrics is :: ", rows);
+                    console.log("lyrics is :: ", rows.length);
                     var origLyrics = null;
                     var transLyrics = null;
                     for (var i = 0; i < rows.length; i++) {
+                        console.log("Row Lang", rows[i], rows[i].transLang);
                         if (rows[i].transLang == song.origLang) {
                            origLyrics = rows[i].text;
                         }
@@ -219,6 +223,8 @@ app.get("/:artist/:title/:lang", function(req, res) {
                             transLyrics = rows[i].text;
                         }
                     }
+                    console.log("Original Lyrics", origLyrics !== null);
+                    console.log("Translated Lyrics", transLyrics !== null);
                     finishSong(origLyrics, transLyrics, song.origLang, req.params.lang, song.id);
                 }
             );
