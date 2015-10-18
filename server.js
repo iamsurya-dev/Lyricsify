@@ -69,7 +69,7 @@ function languageNames(req,res)
 });
 }
 
-function searchSongs(req,res) {
+function handle_database(req,res) {
     
     pool.getConnection(function(err,connection) {
         if (err) {
