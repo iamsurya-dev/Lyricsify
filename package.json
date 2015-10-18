@@ -3,6 +3,7 @@
    "version": "0.0.1",
    "dependencies": {
      "express": "^4.13.3",
-     "mysql": "^2.9.0"
+     "mysql": "^2.9.0",
+     "mstranslator": "^2.0.2"
    }
  }
