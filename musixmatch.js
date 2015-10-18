@@ -15,15 +15,15 @@ exports.getLyricsById = function(id, callback) {
 };
 
 // calls callback with artist, title, id
-exports.getArtistTitleIdBySearch = function(artist, title) {
-	request(''http://api.musixmatch.com/ws/1.1/matcher.track.get?apikey='+
+exports.getArtistTitleIdBySearch = function(artist, title, callback) {
+	request('http://api.musixmatch.com/ws/1.1/matcher.track.get?apikey='+
 			encodeURIComponent(process.env.APIKEY)+
 			'&q_artist='+encodeURIComponent(artist)+'&q_track='+encodeURIComponent(title),
 		function (error, response, body) {
 			if (!error & response.statusCode == 200) {
 				var resp = JSON.parse(body);
 				resp = resp.message.body.track;
-				callback(resp.artist_name, resp.track_name, resp.track_id)
+				callback(resp.artist_name, resp.track_name, resp.track_id);
 			}
 		}
 	);
