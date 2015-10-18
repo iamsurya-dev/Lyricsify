@@ -182,6 +182,7 @@ app.get("/:artist/:title/:lang", function(req, res) {
                 console.log("!!!!!", origLyrics, transLyrics, origLang, transLang, songId);
                 client.translateArray({texts: origLyrics.split('\n'), from:origLang, to:transLang},
                 function (err, dataArray) {
+                    if (err) {connection.release(); res.end(); return; }
                     var data = "";
                     for (var i = 0; i < dataArray.length; i++) {
                         data += dataArray[i].TranslatedText + '\n';

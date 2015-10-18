@@ -39,9 +39,11 @@ $myObject.transLyrics = "John";*/
 
 		var $originalLyrics = $('#originallyrics');
 		$originalLyrics.text(response.origLyrics);
+		$originalLyrics.val(response.origLyrics);
 
 		var $translatedlyrics = $('#translatedlyrics');
 		$translatedlyrics.text(response.transLyrics);
+		$translatedlyrics.val(response.transLyrics);
  
   		$('#submittransl').hide();
   		$('#translatedlyrics').attr('readonly', true);
