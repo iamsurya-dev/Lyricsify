@@ -8,7 +8,7 @@ exports.getLyricsById = function(id, callback) {
 			if (!error & response.statusCode == 200) {
 				var resp = JSON.parse(body);
 				resp = resp.message.body.lyrics;
-				callback(resp.lyrics_body, resp.lyrics_language);
+				callback(resp.lyrics_body + '\n' + resp.lyrics_copyright, resp.lyrics_language);
 			}
 		}
 	);
