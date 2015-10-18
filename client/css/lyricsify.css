@@ -17,8 +17,8 @@
 		#bottom { bottom: 0; }
 
 .container {
-	width: 900px;
-    height: 400px;
+	width: 100%;
+    height: 100%;
     position: relative;
     top: 10%;
     bottom: initial;

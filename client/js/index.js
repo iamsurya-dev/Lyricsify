@@ -13,9 +13,9 @@ var $lyricsList;
 	}); */
 
 var $myObject = new Object();
-$myObject.origLyrics = "John";
+/*$myObject.origLyrics = "John";
 $myObject.origLang = "cat";
-$myObject.transLyrics = "John";
+$myObject.transLyrics = "John";*/
 
 	$lyricsList = $myObject;
 	console.log("lyricslist",$lyricsList);
@@ -30,6 +30,16 @@ $myObject.transLyrics = "John";
 				text: language
 			}));
 		});
+	}
+
+	function showResponse(response){
+		console.log('showResponse:', response);
+
+		var $originalLyrics = $('#originallyrics');
+		$originalLyrics.text(response.origLyrics);
+
+		var $translatedlyrics = $('#translatedlyrics');
+		$translatedlyrics.text(response.transLyrics);
 	}
 
 	// get languages for options
@@ -71,6 +81,10 @@ $myObject.transLyrics = "John";
   		e.preventDefault();
   		var songTitle = $('#inputSong').val(); // fix
   		var songArtist = $('#inputArtist').val();
+  		var songLanguage = $('#languagemenu').val();
+
+  		$.getJSON('/'+encodeURIComponent(songTitle) + '/' + encodeURIComponent(songArtist) + '/' + encodeURIComponent(songLanguage), showResponse);
+
 
   		$('#songTitle').html(songTitle + ' - ' + songArtist);
   	}); 

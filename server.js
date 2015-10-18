@@ -165,10 +165,12 @@ app.get("/:artist/:title/:lang", function(req, res) {
                 connection.query("insert into songs set ?", {artist: artist, title: title, origLang: origLang}, 
                 function(err, result) {
                     if (err) { connection.release(); res.end(); return; }
+                    var newSongId = result.insertId; 
                     connection.query("insert into lyrics set ?", 
-                        {songId: result.insertId, transLang: origLang, text: origLyrics}, function (err, result) {
-                        if (err) { connection.release(); res.end(); return; }
-                        finishSong(origLyrics, null, origLang, transLang, result.insertId);
+                        {songId: newSongId, transLang: origLang, text: origLyrics}, function (err, result) {
+                        if (err) { console.log("Error!!!!!!", err); connection.release(); res.end(); return; }
+                        console.log("Result is ::: ", result);
+                        finishSong(origLyrics, null, origLang, transLang, newSongId);
                     });
                 });
             });
@@ -177,12 +179,14 @@ app.get("/:artist/:title/:lang", function(req, res) {
         var finishSong = function (origLyrics, transLyrics, origLang, transLang, songId) {
             if (origLyrics === null) { connection.release(); res.end(); return; }
             if (transLyrics === null) {
+                console.log("!!!!!", origLyrics, transLyrics, origLang, transLang, songId);
                 client.translate({text: origLyrics, from:origLang, to:transLang},
                 function (err, data) {
                     connection.query("insert into lyrics set ?",
                         {songId:songId, transLang:transLang, text:data}, 
                         function (err, result) {
                         if (err) { connection.release(); res.end(); return; }
+
                         send(origLyrics, data, origLang);
                     });
                 });
@@ -305,6 +309,8 @@ app.post("/mod", function(req, res) {
             return;     
       });
   });
+});
+
 app.get('/languages', function(req, res) {
     languageNames(function (err, data) { 
         //console.log(data.length, languageCodes.length, data, languageCodes);
