@@ -46,10 +46,7 @@ client.getLanguagesForTranslate(function(err, data) {
   // console.log("data1:",langcodes);
 });*/
 
-var params1={
-  locale:'en',
-  languageCodes:['ar', 'bs-Latn', 'bg', 'ca', 'zh-CHS', 'zh-CHT', 'hr', 'cs', 'da', 'nl', 'en', 'et', 'fi', 'fr', 'de', 'el', 'ht', 'he', 'hi', 'mww', 'hu', 'id', 'it', 'ja', 'tlh', 'tlh-Qaak', 'ko', 'lv', 'lt', 'ms', 'mt', 'yua', 'no', 'otq', 'fa', 'pl', 'pt', 'ro', 'ru', 'sr-Cyrl', 'sr-Latn', 'sk', 'sl', 'es', 'sv', 'th', 'tr', 'uk', 'ur', 'vi', 'cy']
-};
+var languageCodes = ['ar', 'bs-Latn', 'bg', 'ca', 'zh-CHS', 'zh-CHT', 'hr', 'cs', 'da', 'nl', 'en', 'et', 'fi', 'fr', 'de', 'el', 'ht', 'he', 'hi', 'mww', 'hu', 'id', 'it', 'ja', 'tlh', 'tlh-Qaak', 'ko', 'lv', 'lt', 'ms', 'mt', 'yua', 'no', 'otq', 'fa', 'pl', 'pt', 'ro', 'ru', 'sr-Cyrl', 'sr-Latn', 'sk', 'sl', 'es', 'sv', 'th', 'tr', 'uk', 'ur', 'vi', 'cy']
 // Don't worry about access token, it will be auto-generated if needed.
 // client.translate(params, function(err, data) {
 //   console.log("Data is :: ", data);
@@ -67,11 +64,9 @@ function translate(req,res)
 });
 }
 
-function languageNames(req,res)
+function languageNames(callback)
 {
-  client.getLanguageNames(params1,function(err,data){
-  console.log("Data is :: ", data);
-});
+  client.getLanguageNames({locale:'en', languageCodes:languageCodes}, callback);
 }
 
 function handle_database(req,res) {
@@ -249,6 +244,18 @@ app.get("/:artist/:title/:lang", function(req, res) {
               return;     
         });
   });
+});
+
+app.get('/languages', function(req, res) {
+    languageNames(function (err, data) { 
+        //console.log(data.length, languageCodes.length, data, languageCodes);
+        if (data.length != languageCodes.length) { res.end(); return; }
+        var out = {};
+        for (var i = 0; i < data.length; i++) {
+            out[languageCodes[i]] = data[i];
+        }
+        res.json(out);
+    });
 });
 
 app.listen(3000);
