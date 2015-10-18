@@ -21,44 +21,47 @@
 	</head>
 	<body>
 		<div class="container">
-			<div class="logo">
-				<h1>Lyricsify</h1>
-			</div><!-- end of header -->
-
-
-			<div id="searchContent">
-				<div id="searchContainer">		
-					<form id="searchForm" action="" method="get">
-						<input type="search" id="searchBox" placeholder="Search a song"  />
-					</form>
-
-					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<h1>Lyricsify</h1>
 				</div>
-			</div><!-- end of content -->
-
-		
+			</div>
+			<div class="row">
+				<div class="form-inline text-center" role="form">
+				  	<div class="form-group">
+				    	<input type="text" class="form-control"  placeholder="Search a song" id="song">
+				  	</div>
+				  	<div class="form-group">
+				    	<input type="text" class="form-control" placeholder="Enter artist name" id="artist">
+				  	</div>
+				  	<ul class="dropdown-menu">
+				  		<li><a href="#">Action</a></li>
+		  	          	<li><a href="#">Another action</a></li>
+		  	         	<li><a href="#">Something else here</a></li>
+		  	          	<li role="separator" class="divider"></li>
+		  	          	<li><a href="#">Separated link</a></li>
+				  	</ul>
+				  	<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+				  	
+				</div>
+			</div>
+	
 
 			<div class="row">
-
 				<div class="col-md-6">
-					<h4>Content 1</h4>
+					<h4 class="text-center">Content 1</h4>
+					<textarea class="form-control" rows="8"></textarea>
 				</div>
 
 				<div class="col-md-6">
-					<h4>Content 2</h4>
+					<h4 class="text-center">Content 2</h4>
+					<textarea class="form-control" rows="8"></textarea>
 				</div>
 
-			</div><!--lyrics content -->
+			</div>
 
 		</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<!-- fallback to local jquery
-		<script>
-			if (typeof jQuery === 'undefined') {
-			document.write(unescape('%3Cscript%20src%3D%22/path/to/your/scripts/jquery-2.1.4.min.js%22%3E%3C/script%3E'));
-		</script> -->
-		<script src="js/index.js"></script>	
 	</body>
 </html>
