@@ -30,15 +30,44 @@ var params = {
   from: fromLang,
   to: toLang
 };
-
+var langcodes=new Array();
 client.getLanguagesForTranslate(function(err, data) {
-  console.log("Data is :: ", data);
+  console.log("Data is :: ", data," typeof:"+typeof(data)," len"+data.length);
+  // for(i=0;i<data.length;i++)
+  // {
+  //   var str=data[i].replace('\r', '').replace('\n', '');
+  //   langcodes.push(str);
+  // }
+  // console.log("data1:",langcodes);
 });
 
+var params1={
+  locale:'en',
+  languageCodes:['ar', 'bs-Latn', 'bg', 'ca', 'zh-CHS', 'zh-CHT', 'hr', 'cs', 'da', 'nl', 'en', 'et', 'fi', 'fr', 'de', 'el', 'ht', 'he', 'hi', 'mww', 'hu', 'id', 'it', 'ja', 'tlh', 'tlh-Qaak', 'ko', 'lv', 'lt', 'ms', 'mt', 'yua', 'no', 'otq', 'fa', 'pl', 'pt', 'ro', 'ru', 'sr-Cyrl', 'sr-Latn', 'sk', 'sl', 'es', 'sv', 'th', 'tr', 'uk', 'ur', 'vi', 'cy']
+};
 // Don't worry about access token, it will be auto-generated if needed.
-client.translate(params, function(err, data) {
+// client.translate(params, function(err, data) {
+//   console.log("Data is :: ", data);
+// });
+
+
+// client.getLanguageNames(params1,function(err,data){
+//   console.log("Data is :: ", data);
+// });
+
+function translate(req,res)
+{
+  client.translate(params, function(err, data) {
   console.log("Data is :: ", data);
 });
+}
+
+function languageNames(req,res)
+{
+  client.getLanguageNames(params1,function(err,data){
+  console.log("Data is :: ", data);
+});
+}
 
 function searchSongs(req,res) {
     
