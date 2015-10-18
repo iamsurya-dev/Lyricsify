@@ -1,40 +1,58 @@
 $(function() {
 
-	var times;                                     
-	$.ajax({
-	beforeSend: function(xhr) {                  
-	  if (xhr.overrideMimeType) {       
-	    xhr.overrideMimeType("application/json"); // json data
-	  }
-	}
-	});
+var $lyricsList;  
 
 	// Collects data from JSON
 	function loadLyricsContent() {                   
-	$.getJSON('data/lyrics.json')      // collect JSON data
+	/*$.getJSON('data/lyrics.json')    
 	.done( function(data){                    
-	  times = data;                             
+	   lyricsList = data;                            
 	}).fail( function() {  
 		// fix here                    
 	  $('#translatedlyrics').html('Sorry! We could not load the translated lyrics!');
-	});
-	}
+	}); */
 
-  	loadLyricsContent();                         
+var $myObject = new Object();
+$myObject.origLyrics = "John";
+$myObject.origLang = "cat";
+$myObject.transLyrics = "John";
+
+	$lyricsList = $myObject;
+	console.log("lyricslist",$lyricsList);
+	}   
+                   
 
 	//SETUP
-	var $searchContent, $searchForm, $lyricsContent;
-	$search = $('#searchForm');
-	$lyricsContent = $('#lyricscontent');
-	$searchContent = $('#searchContent');
+	var $main, $translationContent, $translate;
+	$main = $('#main');
+	$translationContent = $('#translation');
+	$translate = $('#translate');
 
-	// Shows Search Content Only
-	$searchContent.show();
-	$lyricsContent.hide();
-	$searchForm.on('submit', function(e){
+	$main.show();
+	$translationContent.hide();
+	$translate.on('click', function(e){
 		e.preventDefault();  
+		                               
+		$.ajax({
+		beforeSend: function(xhr) {                  
+		  if (xhr.overrideMimeType) {       
+		    xhr.overrideMimeType("application/json"); // json data
+		  }
+		}
+		});
+		loadLyricsContent();
 
-		$('#lyricscontainer').remove();
-		$lyricsContent.load();
-	});
+		$('#translatedlyrics').html($lyricsList.transLyrics);
+		$('#translatedlyrics').html($lyricsList.transLyrics);
+		$translationContent.show();
+	}); 
+
+
+  	$translate.on('click', function(e){
+  		e.preventDefault();
+  		var songTitle = $('#inputSong').val(); // fix
+  		var songArtist = $('#inputArtist').val();
+
+  		$('#songTitle').html(songTitle + ' - ' + songArtist);
+  	}); 
 });
