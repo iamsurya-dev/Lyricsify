@@ -103,7 +103,7 @@ app.get("/call",function(req,res){-
 });
 
 app.post("/:artist/:title/:lang", function(req, res) {
-    pool.getConnection(function(err,connection) {
+   pool.getConnection(function(err,connection) {
         if (err) {
         	console.log("Error is ::", err);		
           connection.release();
@@ -215,7 +215,6 @@ app.get("/:artist/:title/:lang", function(req, res) {
                     var origLyrics = null;
                     var transLyrics = null;
                     for (var i = 0; i < rows.length; i++) {
-                        console.log("Row Lang", rows[i], rows[i].transLang);
                         if (rows[i].transLang == song.origLang) {
                            origLyrics = rows[i].text;
                         }
@@ -223,8 +222,6 @@ app.get("/:artist/:title/:lang", function(req, res) {
                             transLyrics = rows[i].text;
                         }
                     }
-                    console.log("Original Lyrics", origLyrics !== null);
-                    console.log("Translated Lyrics", transLyrics !== null);
                     finishSong(origLyrics, transLyrics, song.origLang, req.params.lang, song.id);
                 }
             );

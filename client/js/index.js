@@ -72,7 +72,7 @@ $myObject.transLyrics = "John";*/
 
 
 	// edit and display submit button
-	$('#submittransl').hide();
+	//$('#submittransl').hide();
 	$('#edit').on('click', function(){
 		$('#submittransl').show();
 	})
@@ -83,7 +83,21 @@ $myObject.transLyrics = "John";*/
   		var songArtist = $('#inputArtist').val();
   		var songLanguage = $('#languagemenu').val();
 
-  		$.getJSON('/'+encodeURIComponent(songTitle) + '/' + encodeURIComponent(songArtist) + '/' + encodeURIComponent(songLanguage), showResponse);
+  		$.getJSON('/'+encodeURIComponent(songArtist) + '/' + encodeURIComponent(songTitle) + '/' + encodeURIComponent(songLanguage), showResponse);
+
+
+  		$('#songTitle').html(songTitle + ' - ' + songArtist);
+  	}); 
+
+  	$('#submittransl').on('click', function(e){
+  		console.log("dffsdfsdf");
+  		e.preventDefault();
+  		var songTitle = $('#inputSong').val(); // fix
+  		var songArtist = $('#inputArtist').val();
+  		var songLanguage = $('#languagemenu').val();
+  		var translatedlyrics = $('#translatedlyrics').val();
+
+  		$.post('/'+encodeURIComponent(songArtist) + '/' + encodeURIComponent(songTitle) + '/' + encodeURIComponent(songLanguage), {text: translatedlyrics}, showResponse);
 
 
   		$('#songTitle').html(songTitle + ' - ' + songArtist);
