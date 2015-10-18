@@ -17,51 +17,67 @@
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 
+		<link href='https://fonts.googleapis.com/css?family=Esteban|Satisfy|Indie+Flower|Open+Sans+Condensed:300|Text+Me+One|Pacifico' rel='stylesheet' type='text/css'>
+
 		<link rel="stylesheet" href="css/lyricsify.css" />
 	</head>
+
+
+
 	<body>
+
+		<div id="left"></div>
+		<div id="right"></div>
+		<div id="top"></div>
+		<div id="bottom"></div>
+
+		<div id="everything">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12 text-center">
-					<h1>Lyricsify</h1>
+			<div class="main">
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<h1>Lyricsify</h1>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-inline text-center" role="form">
+					  	<div class="form-group">
+					    	<input type="text" class="form-control"  placeholder="Search a song" id="song">
+					  	</div>
+					  	<div class="form-group">
+					    	<input type="text" class="form-control" placeholder="Enter artist name" id="artist">
+					  	</div>
+					  	<ul class="dropdown-menu">
+					  		<li><a href="#">Action</a></li>
+			  	          	<li><a href="#">Another action</a></li>
+			  	         	<li><a href="#">Something else here</a></li>
+			  	          	<li role="separator" class="divider"></li>
+			  	          	<li><a href="#">Separated link</a></li>
+					  	</ul>
+					  	<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+					  	
+					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="form-inline text-center" role="form">
-				  	<div class="form-group">
-				    	<input type="text" class="form-control"  placeholder="Search a song" id="song">
-				  	</div>
-				  	<div class="form-group">
-				    	<input type="text" class="form-control" placeholder="Enter artist name" id="artist">
-				  	</div>
-				  	<ul class="dropdown-menu">
-				  		<li><a href="#">Action</a></li>
-		  	          	<li><a href="#">Another action</a></li>
-		  	         	<li><a href="#">Something else here</a></li>
-		  	          	<li role="separator" class="divider"></li>
-		  	          	<li><a href="#">Separated link</a></li>
-				  	</ul>
-				  	<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-				  	
-				</div>
-			</div>
-	
 
-			<div class="row">
-				<div class="col-md-6">
-					<h4 class="text-center">Content 1</h4>
-					<textarea class="form-control" rows="8"></textarea>
-				</div>
+			<div class="sub">
+				<div class="row">
+					<div class="col-md-6">
+						<h4 class="text-center">Original</h4>
+						<textarea class="form-control" rows="8"></textarea>
+					</div>
 
-				<div class="col-md-6">
-					<h4 class="text-center">Content 2</h4>
-					<textarea class="form-control" rows="8"></textarea>
-				</div>
+					<div class="col-md-6">
+						<h4 class="text-center">Translated</h4>
+						<textarea class="form-control" rows="8"></textarea>
+					</div>
 
-			</div>
+				</div>
 
 		</div>
+	</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	</div>
 	</body>
 </html>

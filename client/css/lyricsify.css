@@ -1,12 +1,75 @@
-/* .container {
+
+
+#top, #bottom, #left, #right {
+	background: rgb(159, 45, 47);
+	position: fixed;
+	}
+	#left, #right {
+		top: 0; bottom: 0;
+		width: 0px;
+		}
+		#left { left: 0; }
+		#right { right: 0; }
+		
+	#top, #bottom {
+		left: 0; right: 0;
+		height: 20px;
+		}
+		#top { top: 0; }
+		#bottom { bottom: 0; }
+
+.container {
 	width: 900px;
     height: 400px;
-    position: absolute;
+    position: relative;
     top: 10%;
     bottom: initial;
     left: 0;
     right: 0;
     margin: auto;
+
+    position: relative;
+    top: 50px;
+}
+
+body {
+	background-color: rgb(245, 79, 83);
+}
+
+.container h1{
+	font-family: 'Pacifico', cursive;
+	color: rgb(255, 255, 255);
+	font-size: 70px;
+	position: relative;
+	bottom: 30px;
+}
+
+.container h4{
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-weight: bold;
+	color: rgb(255, 255, 255);
+}
+
+.container input{
+	background-color: rgb(245, 79, 83);
+	border-color: rgb(154, 45, 47);
+	border-width: 1px;
+	color: rgb(255, 255, 255);
+}
+
+.container textarea{
+	background-color: rgb(241, 157, 157);
+	border-color: rgb(241, 157, 157);
+}
+
+
+.main{
+	background-color: rgb(245, 79, 83);
+}
+
+.container .col-md-6{
+	position: relative;
+	top: 40px;
 }
 
 .logo h1 {
@@ -45,5 +108,19 @@ search field
 	color: #207cca;
 }
 
+.form-control::-webkit-input-placeholder { 
+	color: white; 
+	font-family: 'Open Sans Condensed', sans-serif;
+}
+.form-control::-moz-placeholder { 
+	color: white; 
+	font-family: 'Open Sans Condensed', sans-serif;
+}
+.form-control:-ms-input-placeholder { 
+	color: white; 
+	font-family: 'Open Sans Condensed', sans-serif;
+}
 
- */
+
+
+
