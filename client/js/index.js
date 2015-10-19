@@ -112,7 +112,7 @@ $myObject.transLyrics = "John";*/
   		var songLanguage = $data.lang;
   		var translatedlyrics = $('#translatedlyrics').val();
 
-  		$.post('/'+encodeURIComponent(songArtist) + '/' + encodeURIComponent(songTitle) + '/' + encodeURIComponent(songLanguage), {text: translatedlyrics}, showResponse);
+  		$.post('/'+encodeURIComponent(songArtist) + '/' + encodeURIComponent(songTitle) + '/' + encodeURIComponent(songLanguage), {text: translatedlyrics}, console.log);
 
 
   		$('#songTitle').html(songTitle + ' - ' + songArtist);

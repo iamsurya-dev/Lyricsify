@@ -11,10 +11,10 @@ var toLang='fr';
 
 var pool = mysql.createPool({
     connectionLimit : 100, //important
-    host     : 'localhost',
-    user     : 'root',
+    host     : 'us-cdbr-azure-central-a.cloudapp.net',
+    user     : 'bef241aac11ce2',
     password : process.env.MYSQLPASS,
-    database : 'lyricsify',
+    database : 'acsm_35d30e33720d211',
     debug    :  false
 });
 
