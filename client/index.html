@@ -17,9 +17,8 @@
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 
-	<link href='https://fonts.googleapis.com/css?family=Esteban|Satisfy|Indie+Flower|Open+Sans+Condensed:300|Text+Me+One|Pacifico' rel='stylesheet' type='text/css'>
-
 	<link rel="stylesheet" href="css/lyricsify.css" />
+	<!-- <link rel="stylesheet" href="css/hover.css" /> -->
 </head>
 
 
@@ -43,17 +42,15 @@
 					<div class="form-inline text-center" role="form">
 					  	<div class="form-group">
 					    	<input type="text" class="form-control"  placeholder="Name of Song" id="inputSong">
-					  	</div>
-					  	<div class="form-group">
 					    	<input type="text" class="form-control" placeholder="Name of Artist" id="inputArtist">
+					    	<select id="languagemenu" name="langs" > <!-- diff -->
+					    	</select>
 					  	</div>
-					  	<button type="submit" class="btn btn-default" id="translate">Translate</button>
-					  	
+
+					  	<div class="buttonArea">
+			  	        	<button type="submit" class="button cta hvr-fade" id="translate">Translate</button>
+			  	      	</div>
 					</div>
-					<div id="options">
-					  	<select id="languagemenu" name="languages">
-					  	</select>
-				  	</div>
 				</div>
 			</div>
 	
@@ -68,12 +65,12 @@
 				<table>
 					<tr>
 						<td>
-							<h4 class="text-left">Original Language</h4>
+							<h4 class="text-left">Original</h4>
 							
 						</td><!-- Original Lang -->
 						<td>
 							<div id="translatedtitle">
-								<h4 class="text-left">Translated - Language</h4>
+								<h4 class="text-left">Translated</h4>
 								<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-pencil" id="edit" aria-hidden="true"></span></button>
 							</div>
 						</td><!-- Translated Lang -->
@@ -81,10 +78,10 @@
 
 					<tr>
 						<td>
-							<textarea class="form-control" rows="8" id="originallyrics"></textarea>
+							<textarea class="form-control lyricstext" rows="8" id="originallyrics"></textarea>
 						</td><!-- original text -->
 						<td>
-							<textarea class="form-control" rows="8" id="translatedlyrics"> </textarea>
+							<textarea class="form-control lyricstext" rows="8" id="translatedlyrics"> </textarea>
 						</td><!-- translated text -->
 					</tr>
 					<tr>
